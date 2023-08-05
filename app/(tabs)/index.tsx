@@ -1,12 +1,16 @@
 import { Link } from 'expo-router';
-import { Flex } from 'native-base';
+import { Box, Button, useColorMode } from 'native-base';
 
 const Home = () => {
-  return <Flex flex='1' >
-    <Link href='pages/add_money'>Add Money</Link>
-    <Link href='pages/transfer'>Transfer</Link>
-    <Link href='pages/withdraw'>Withdraw</Link>
-  </Flex>;
+  const { toggleColorMode } = useColorMode();
+  return (
+    <Box flex='1'>
+      <Button onPress={toggleColorMode}>Press</Button>
+      <Link href='pages/add_money'>Add p Money</Link>
+      <Link href='pages/transfer'>Transfer</Link>
+      <Link href='pages/withdraw'>Withdraw</Link>
+    </Box >
+  );
 };
 
 export default Home;

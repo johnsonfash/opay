@@ -4,9 +4,9 @@ import { ReactNode } from 'react';
 import { initialWindowMetrics } from 'react-native-safe-area-context';
 
 const SafeArea = ({ children }: { children: ReactNode }) => {
-  const bg = useColorModeValue("warmGray.50", "coolGray.800");
-  return <Flex flex={1} bg={bg} paddingTop={initialWindowMetrics?.insets.top} paddingBottom={initialWindowMetrics?.insets.bottom}>
-    <StatusBar animated translucent style={bg === 'warmGray.50' ? 'dark' : 'light'} />
+  const bg = useColorModeValue("white", "black");
+  return <Flex flex={1} bg={bg} paddingTop={initialWindowMetrics?.insets.top}>
+    <StatusBar animated translucent style={bg === 'white' ? 'dark' : 'light'} />
     {children}
   </Flex>;
 };
