@@ -48,9 +48,14 @@ export const tabOptions: TabType = ({ route }) => ({
     } else if (route.name === 'finance') {
       return <Box
         bgColor={focused ? 'app.splashGreen' : 'white'}
-        borderRadius={5}
+        borderWidth='2px'
+        borderStyle='solid'
+        borderRadius='5'
+        height='23px'
+        width='23px'
+        borderColor={focused ? 'app.splashGreen' : 'gray.300'}
       >
-        <Icon as={MatrialIcon} name='chart-line-variant' size={23} color={focused ? 'white' : 'gray.400'} />
+        <Icon as={MatrialIcon} name='chart-line-variant' size='18px' color={focused ? 'white' : 'gray.400'} />
       </Box>;
     } else if (route.name === 'cards') {
       return <Icon as={MatrialIcon} name={focused ? 'credit-card' : 'credit-card-outline'} size={25} color={focused ? 'app.splashGreen' : 'gray.400'} />;
@@ -80,6 +85,7 @@ export const tabOptions: TabType = ({ route }) => ({
     }
   },
   tabBarStyle: {
+    paddingTop: 7,
     backgroundColor: 'white',
   },
   headerShown: false

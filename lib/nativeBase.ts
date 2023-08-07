@@ -5,7 +5,7 @@ import type { StorageManager } from "native-base";
 export const theme = extendTheme({
   colors: {
     app: {
-      splashGreen: '#57c28b',
+      splashGreen: '#27ba6e',
       darkGreen: '#52b57c',
       lighGreen: '#e5f5ec',
     },
