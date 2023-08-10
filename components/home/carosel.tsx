@@ -1,11 +1,9 @@
-import { Box, FlatList, HStack } from 'native-base';
+import { Box, HStack } from 'native-base';
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
+import { Dimensions, FlatList, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import CaroselView from './caroselView';
-import { InterfaceFlatListProps } from 'native-base/lib/typescript/components/basic/FlatList/types';
 
 const { width } = Dimensions.get("window");
-
 export interface DATAProp {
   type: 'image' | 'icon';
   icon?: string;
@@ -28,44 +26,51 @@ const DATA: DATAProp[] = [
     detail: 'Get up to 6% cashback instantly on airtime recharge'
   }
 ]
-
-let m = 0
+let i = 0;
 function Carosel() {
+  const [end, setEnd] = useState(false);
   const [index, setIndex] = useState(0)
   const caroselRef = useRef<any>(null)
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const timer = useRef<ReturnType<typeof setInterval> | null>(null)
 
   useEffect(() => {
-    setTimeout(() => {
-      console.log((Object.keys(caroselRef.current) as any))
-      // console.log((Object.keys(caroselRef.current?.updater) as any))
-
-    }, 3000)
-  }, [])
-
-  useEffect(() => {
-    // timer.current = setTimeout(autoPlay, 2000)
-
-    return () => {
-      if (timer.current) {
-        clearTimeout(timer.current)
-      }
+    if (caroselRef.current) {
+      startTimer()
     }
-  }, [])
+    return () => {
+      clearInterval(timer.current as unknown as number)
+    }
+  }, [caroselRef])
 
-  const scrollList = () => {
-    // caroselRef.current.scro 
+  const startMovement = () => {
+    caroselRef.current.scrollToIndex({ index: i, animated: true })
+    i = i === 1 ? 0 : 1
   }
 
-  const autoPlay = () => {
-
+  const startTimer = () => {
+    timer.current = setInterval(() => {
+      startMovement()
+    }, 3000)
   }
 
   return (
     <Box position='relative'>
       <FlatList
-        ref={function (ref: any) { caroselRef.current = ref } as any}
+        ref={caroselRef}
         horizontal
+        onScrollBeginDrag={() => {
+          clearInterval(timer?.current as unknown as number)
+          startTimer()
+        }}
+        onEndReached={() => {
+          setEnd(true);
+        }}
+        onScrollEndDrag={() => {
+          if (end) {
+            caroselRef.current.scrollToIndex({ index: 0, animated: true })
+            setEnd(false);
+          }
+        }}
         pagingEnabled
         onScroll={(e: NativeSyntheticEvent<NativeScrollEvent>) => {
           const slideSize = e.nativeEvent.layoutMeasurement.width;
